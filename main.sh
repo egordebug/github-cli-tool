@@ -17,6 +17,5 @@ main() {
     get_github_token || { echo "failed to receive token" >&2; exit 1; }
 
 }
-}
 
 token "$@"
