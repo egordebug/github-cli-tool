@@ -4,9 +4,9 @@ TOKEN_FILE="$HOME/.mygithubcli_token"
 
 get_token() {
     local caller_script
-    caller_script=$(ps -o comm= $PPID)
+    caller_script=$(ps -o args= $PPID)
     
-    if [[ "$caller_script" != *"main.sh" ]]; then
+    if [[ "$caller_script" != *"main.sh"* ]]; then
         echo "Access denied: Token can only be accessed by main.sh" >&2
         return 1
     fi
@@ -35,18 +35,31 @@ save_token() {
 }
 
 main() {
-    check_deps
-    local token
-    token=$(ask_token)
-    clear
-    if verify_token "$token"; then
-        save_token "$token"
-        dialog --msgbox "Authorization successful" 6 40
-    else
-        dialog --msgbox "Invalid token" 6 40
-    fi
-    clear
+    case "$1" in
+        "get_token")
+            get_token
+            ;;
+        "set_token")
+            check_deps
+            local token
+            token=$(ask_token)
+            clear
+            if verify_token "$token"; then
+                save_token "$token"
+                dialog --msgbox "Authorization successful" 6 40
+            else
+                dialog --msgbox "Invalid token" 6 40
+            fi
+            clear
+            ;;
+        *)
+            echo "Usage: $0 {set_token|get_token}"
+            exit 1
+            ;;
+    esac
 }
+
+main "$@"
 
 case "$1" in
     "ask_token")
