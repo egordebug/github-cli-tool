@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 TOKEN_FILE="$HOME/.mygithubcli_token"
 
