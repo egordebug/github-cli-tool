@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 get_github_token() {
     # securely get the token
     local token
-    token=$("$SCRIPT_DIR/scripts/n.sh" get_token)
+    token=$("$SCRIPT_DIR/scripts/token.sh" get_token)
     if [ $? -ne 0 ]; then
         echo "Error: Could not retrieve GitHub token" >&2
         return 1
