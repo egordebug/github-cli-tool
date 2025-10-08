@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# Secure token storage location
 TOKEN_FILE="$HOME/.mygithubcli_token"
 
-# Function to get token securely
 get_token() {
     local caller_script
     caller_script=$(ps -o comm= $PPID)
     
-    # Only allow access from main.sh
     if [[ "$caller_script" != *"main.sh" ]]; then
         echo "Access denied: Token can only be accessed by main.sh" >&2
         return 1
@@ -32,7 +29,6 @@ verify_token() {
 }
 
 save_token() { 
-    # Create token file with restricted permissions (only owner can read/write)
     umask 077
     echo "$1" > "$TOKEN_FILE"
     chmod 600 "$TOKEN_FILE"

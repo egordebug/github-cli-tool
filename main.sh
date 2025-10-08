@@ -18,4 +18,4 @@ main() {
 
 }
 
-token "$@"
+main "$@"
